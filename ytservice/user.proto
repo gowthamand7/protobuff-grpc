@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+option go_package = "github.com/gowthamand7/proto-example/ytservice";
+
+message User {
+    string id = 1;
+    string name = 2;
+}
+
+message GetUserRequest {
+    string id = 1;
+}
+
+message CreateUserRequest {
+    string name = 1;
+}
+
+message ListUserRequest {}
+
+message Users {
+    map<string, User> users = 1;
+}
+
+service UserService {
+    rpc GetUser(GetUserRequest) returns (User) {}
+    rpc CreateUser(CreateUserRequest) returns (User) {}
+    rpc UpdateUser(User) returns (User) {}
+    rpc DeleteUser(GetUserRequest) returns (User) {}
+    rpc ListUser(ListUserRequest) returns (Users) {}
+}

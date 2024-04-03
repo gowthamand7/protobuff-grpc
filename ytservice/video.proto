@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+option go_package = "github.com/gowthamand7/proto-example/ytservice";
+
+import "ytservice/comment.proto";
+import "ytservice/user.proto";
+
+message Video {
+    string id =1;
+    string title = 2;
+    string description = 3;
+    User user = 4;
+    map<string, Comment> comments = 5;
+}
+
+
+message Videos {
+    map<string, Video> videos = 1;
+}
+
+message VideoRequest {
+    string id =1;
+}
+
+message CreateVideoRequest {
+    string title = 1;
+    string description = 2;
+    string user_id = 3;
+}
+
+message UpdateVideoRequest {
+    string id = 1;
+    string title = 2;
+    string description = 3;
+}
+
+message ListVideoRequest {
+    string user_id = 1;
+}
+
+service VideoService {
+    rpc GetVideo(VideoRequest) returns (Video) {}
+    rpc CreateVideo(CreateVideoRequest) returns (Video) {}
+    rpc UpdateVideo(UpdateVideoRequest) returns (Video) {}
+    rpc DeleteVideo(VideoRequest) returns (Video) {}
+    rpc ListVideo(ListVideoRequest) returns (Videos) {}
+}

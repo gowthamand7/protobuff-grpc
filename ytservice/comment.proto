@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+option go_package = "github.com/gowthamand7/proto-example/ytservice";
+
+import "ytservice/user.proto";
+
+enum CommentType {
+    TYPE_USER = 0;
+    TYPE_BOT = 1;
+}
+
+message Comment {
+    string id = 1;
+    string video_id = 2;
+    string text = 3;
+    CommentType type = 4;
+    User user = 5;
+    Comment reply_to = 6;
+}
+
+
+message CreateCommentRequest {
+    string video_id = 1;
+    string text = 2;
+    CommentType type = 3;
+    User user = 4;
+    Comment reply_to = 5;
+}
+
+message GetCommentRequest {
+    string id = 1;
+}
+
+message ListCommentsRequest {
+    string video_id = 1;
+}
+
+message Comments {
+    map<string, Comment> comments = 1;
+}
+
+message UpdateCommentRequest {
+    string text = 1;
+}
+
+service CommentService {
+    rpc CreateComment(CreateCommentRequest) returns (Comment) {}
+    rpc GetComment(GetCommentRequest) returns (Comment) {}
+    rpc ListComments(ListCommentsRequest) returns (Comments) {}
+    rpc UpdateComment(UpdateCommentRequest) returns (Comment) {}
+    rpc DeleteComment(GetCommentRequest) returns (Comment) {}
+}
